@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.model.CallBackParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -46,20 +47,23 @@ public class WechatNoticeController {
      * @return 返回文本
      */
     @RequestMapping(value = "/callback", method = {RequestMethod.POST}, produces = "application/xml")
-    public String handCallBack(@RequestBody String param){
-        log.info("微信公众号回调  param:{}", param);
-//        log.info("微信公众号回调  MsgId:{} , MsgType：{} , CreateTime:{}，FromUserName:{}，ToUserName:{}，content:{}",
-//                param.getMsgId(),param.getMsgType(),param.getCreateTime(),param.getFromUserName(),param.getToUserName(),param.getContent());
-        return "success";
-//        log.info("微信公众号回调  MsgId:{} , MsgType：{} , CreateTime:{}，FromUserName:{}，ToUserName:{}，content:{}",
-//                param.getMsgId(),param.getMsgType(),param.getCreateTime(),param.getFromUserName(),param.getToUserName(),param.getContent());
-//        if ("CheckContainerPath".equalsIgnoreCase(param.getAction())){
-//            return "success";
-//        }
-//        return replyXml.replace("{toUser}", param.getFromUserName())
-//                .replace("{fromUser}", param.getToUserName())
-//                .replace("{createTime}", System.currentTimeMillis()/ 1000 + "")
-//                .replace("{content}", "你说的是："+ param.getContent())
-//                ;
+    public String handCallBack(@RequestBody String body){
+        log.info("微信公众号回调  body:{}", body);
+        CallBackParam param = JSONObject.parseObject(body, CallBackParam.class);
+
+        log.info("微信公众号回调  MsgId:{} , MsgType：{} , CreateTime:{}，FromUserName:{}，ToUserName:{}，content:{}",
+                param.getMsgId(),param.getMsgType(),param.getCreateTime(),param.getFromUserName(),param.getToUserName(),param.getContent());
+        if ("CheckContainerPath".equalsIgnoreCase(param.getAction())){
+            return "success";
+        }
+        return replyXml.replace("{toUser}", param.getFromUserName())
+                .replace("{fromUser}", param.getToUserName())
+                .replace("{createTime}", System.currentTimeMillis()/ 1000 + "")
+                .replace("{content}", "你说的是："+ param.getContent())
+                ;
     }
+
+
+
+
 }
