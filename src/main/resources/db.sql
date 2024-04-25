@@ -1,7 +1,9 @@
-CREATE TABLE `Counters` (
+CREATE TABLE `t_share_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `count` int(11) NOT NULL DEFAULT '1',
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+  `key` varchar(50) NOT NULL,
+  `value` varchar(1000) NOT NULL,
+  `is_delete` tinyint(1) NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `key_idx` (`key`) USING BTREE COMMENT 'key索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分享信息表';
