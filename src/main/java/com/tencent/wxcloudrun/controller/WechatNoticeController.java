@@ -48,6 +48,7 @@ public class WechatNoticeController {
     public String handCallBack(@RequestBody CallBackParam param){
         log.info("微信公众号回调  MsgId:{} , MsgType：{} , CreateTime:{}，FromUserName:{}，ToUserName:{}，content:{}",
                 param.getMsgId(),param.getMsgType(),param.getCreateTime(),param.getFromUserName(),param.getToUserName(),param.getContent());
+
         return replyXml.replace("{toUser}", param.getFromUserName())
                 .replace("{fromUser}", param.getToUserName())
                 .replace("{createTime}", System.currentTimeMillis()/ 1000 + "")
