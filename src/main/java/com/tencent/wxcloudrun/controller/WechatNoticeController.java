@@ -4,8 +4,8 @@ package com.tencent.wxcloudrun.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+//import me.chanjar.weixin.common.api.WxConsts;
+//import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 /**
  * @author jiangwei.li
  */
@@ -53,16 +53,16 @@ public class WechatNoticeController {
         //是否开启了回调，如果没开启，则将消息转发给业务段原本的服务上
         log.info("微信公众号回调  appId:{} , signature:{} , timestamp：{} , nonce:{}，requestBody:{}", appId, signature, timestamp, nonce, requestBody);
         // 处理请求
-        WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(requestBody);
-        try {
-            if(WxConsts.XmlMsgType.EVENT.equalsIgnoreCase(inMessage.getMsgType()) && WxConsts.EventType.TEMPLATE_SEND_JOB_FINISH.equalsIgnoreCase(inMessage.getEvent())){
-                // 线上每天有大量的 模板消息发送结果类型的推送 此处手动拦截 不做处理
-                log.info("模板消息发送结果通知类型,不做处理 msg is  {}", inMessage.getAllFieldsMap());
-                return "success";
-            }
-        } catch (Exception e) {
-            log.error("回调入口post, 处理微信请求异常", e);
-        }
+//        WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(requestBody);
+//        try {
+//            if(WxConsts.XmlMsgType.EVENT.equalsIgnoreCase(inMessage.getMsgType()) && WxConsts.EventType.TEMPLATE_SEND_JOB_FINISH.equalsIgnoreCase(inMessage.getEvent())){
+//                // 线上每天有大量的 模板消息发送结果类型的推送 此处手动拦截 不做处理
+//                log.info("模板消息发送结果通知类型,不做处理 msg is  {}", inMessage.getAllFieldsMap());
+//                return "success";
+//            }
+//        } catch (Exception e) {
+//            log.error("回调入口post, 处理微信请求异常", e);
+//        }
         return "success";
     }
 }
