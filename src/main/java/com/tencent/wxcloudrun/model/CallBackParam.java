@@ -29,4 +29,6 @@ public class CallBackParam implements Serializable {
     private String ToUserName;
 
     private String Content;
+
+    private String action;
 }

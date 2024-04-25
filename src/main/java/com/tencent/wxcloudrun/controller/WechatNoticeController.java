@@ -42,19 +42,20 @@ public class WechatNoticeController {
      * "CreateTime": 1714015019,
      * "FromUserName": "o4esP62QjDUWV6rvPdjL2yO4xAyw",
      * "ToUserName": "gh_202725f11c5b",
+     * "action": "CheckContainerPath"
      * @return 返回文本
      */
     @RequestMapping(value = "/callback", method = {RequestMethod.POST}, produces = "application/xml")
-//    public String handCallBack(@RequestBody CallBackParam param){
-    public String handCallBack(@RequestBody String param){
-        log.info("微信公众号回调  param:{}", param);
-//        log.info("微信公众号回调  MsgId:{} , MsgType：{} , CreateTime:{}，FromUserName:{}，ToUserName:{}，content:{}",
-//                param.getMsgId(),param.getMsgType(),param.getCreateTime(),param.getFromUserName(),param.getToUserName(),param.getContent());
-        return "success";
-//        return replyXml.replace("{toUser}", param.getFromUserName())
-//                .replace("{fromUser}", param.getToUserName())
-//                .replace("{createTime}", System.currentTimeMillis()/ 1000 + "")
-//                .replace("{content}", "你说的是："+ param.getContent())
-//                ;
+    public String handCallBack(@RequestBody CallBackParam param){
+        log.info("微信公众号回调  MsgId:{} , MsgType：{} , CreateTime:{}，FromUserName:{}，ToUserName:{}，content:{}",
+                param.getMsgId(),param.getMsgType(),param.getCreateTime(),param.getFromUserName(),param.getToUserName(),param.getContent());
+        if ("CheckContainerPath".equalsIgnoreCase(param.getAction())){
+            return "success";
+        }
+        return replyXml.replace("{toUser}", param.getFromUserName())
+                .replace("{fromUser}", param.getToUserName())
+                .replace("{createTime}", System.currentTimeMillis()/ 1000 + "")
+                .replace("{content}", "你说的是："+ param.getContent())
+                ;
     }
 }
