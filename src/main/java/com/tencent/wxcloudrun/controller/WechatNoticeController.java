@@ -25,17 +25,6 @@ public class WechatNoticeController {
             "</xml>";
 
     /**
-     * 处理中心请求消息(GET)
-     *
-     * @param echostr   打印字符串
-     * @return 返回文本
-     */
-    @RequestMapping(value = "/callback", method = {RequestMethod.GET}, produces = "text/plain")
-    public String getHandleCallback(@RequestParam(value = "echostr", required = false) String echostr){
-        log.info("微信公众号回调探测 echostr:{}", echostr);
-        return echostr;
-    }
-    /**
      * 处理中心请求消息(POST)
      *
      * "MsgId": 24538793330803493
@@ -56,11 +45,13 @@ public class WechatNoticeController {
         if ("CheckContainerPath".equalsIgnoreCase(param.getAction())){
             return "success";
         }
-        return replyXml.replace("{toUser}", param.getFromUserName())
-                .replace("{fromUser}", param.getToUserName())
-                .replace("{createTime}", System.currentTimeMillis()/ 1000 + "")
-                .replace("{content}", "你说的是："+ param.getContent())
-                ;
+        JSONObject result =  new JSONObject();
+        result.put("ToUserName",param.getFromUserName());
+        result.put("FromUserName",param.getToUserName());
+        result.put("CreateTime",System.currentTimeMillis()/ 1000 + "");
+        result.put("MsgType","text");
+        result.put("Content","你说的是："+ param.getContent());
+        return result.toJSONString();
     }
 
 
